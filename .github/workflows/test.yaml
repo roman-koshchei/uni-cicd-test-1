@@ -1,0 +1,31 @@
+name: Test
+
+on: [push]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: "uv.lock"
+
+      - name: Install the project
+        run: |
+          uv sync --all-extras --dev
+
+      - name: Run Pytest with Coverage
+        run: |
+          pytest test.py --html=pytest.html
+
+      - name: Upload Pytest HTML Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: pytest
+          path: pytest.html
