@@ -28,7 +28,6 @@ def validate_txt_file(file_path: str) -> str:
     
     return file_path
 
-
 def main():
     parser = argparse.ArgumentParser(description="Compare two text files and save results.")
     parser.add_argument('file1', type=validate_txt_file, help='First input text file')
